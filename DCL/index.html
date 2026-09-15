@@ -69,30 +69,6 @@ function updateCountdown() {
 }
 const ticker = setInterval(updateCountdown, 1000);
 updateCountdown();
-let milestoneChimePending = remaining(Date.now())[0] <= 20 && !localStorage.getItem('dcl-20-day-chime');
-function playMilestoneChime() {
-  if (!milestoneChimePending) return;
-  const AudioContext = window.AudioContext || window.webkitAudioContext;
-  if (!AudioContext) return;
-  const audio = new AudioContext();
-  const notes = [130.81, 196, 261.63];
-  notes.forEach((frequency, index) => {
-    const oscillator = audio.createOscillator();
-    const gain = audio.createGain();
-    oscillator.type = 'triangle';
-    oscillator.frequency.value = frequency;
-    gain.gain.setValueAtTime(0, audio.currentTime + index * .42);
-    gain.gain.linearRampToValueAtTime(.12, audio.currentTime + index * .42 + .08);
-    gain.gain.exponentialRampToValueAtTime(.001, audio.currentTime + index * .42 + 1.25);
-    oscillator.connect(gain).connect(audio.destination);
-    oscillator.start(audio.currentTime + index * .42);
-    oscillator.stop(audio.currentTime + index * .42 + 1.3);
-  });
-  localStorage.setItem('dcl-20-day-chime', 'played');
-  milestoneChimePending = false;
-}
-document.addEventListener('pointerdown', playMilestoneChime, {once:true});
-document.addEventListener('keydown', playMilestoneChime, {once:true});
 const candyButton = document.getElementById('candy-button');
 const candyPieces = [
   {symbol: '🍭'}, {symbol: '🍬'},
