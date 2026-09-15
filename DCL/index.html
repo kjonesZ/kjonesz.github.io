@@ -75,7 +75,7 @@ candyButton.addEventListener('click', () => {
   for (let i = 0; i < amount; i += 1) {
     setTimeout(() => {
       const candy = document.createElement('span');
-      const treat = candyPieces[Math.floor(Math.random() * candyPieces.length)];
+      const treat = i % 4 === 0 ? candyPieces[5] : candyPieces[Math.floor(Math.random() * 5)];
       candy.className = `falling-candy${treat.className ? ` ${treat.className}` : ''}`;
       candy.textContent = treat.symbol;
       candy.style.left = `${Math.random() * 96}%`;
