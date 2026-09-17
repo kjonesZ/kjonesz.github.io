@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#091b36">
+<meta name="description" content="Mickey surprises for the Jones family's Halloween on the High Seas cruise.">
+<title>Mickey's Magic Deck · Jones Family Cruise</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#fff;background:#091b36}
+*{box-sizing:border-box}
+body{margin:0;min-height:100svh;background:radial-gradient(circle at 50% -10%,#583067 0,#192845 38%,#091b36 78%);overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.24;background-image:radial-gradient(#ffd394 1px,transparent 1.5px),radial-gradient(#ffffffb0 1px,transparent 1.5px);background-size:93px 103px,157px 139px;background-position:16px 24px,61px 76px}
+.wrap{position:relative;width:min(1100px,100%);margin:auto;padding:26px clamp(22px,5vw,64px) 64px}
+.back{display:inline-flex;align-items:center;gap:9px;color:#e9cde9;text-decoration:none;font-size:.9rem;padding:10px 0;text-underline-offset:4px}.back:hover{text-decoration:underline}.back:focus-visible,.head:focus-visible,.choice:focus-visible,.close:focus-visible{outline:3px solid #ffd28a;outline-offset:4px}
+header{text-align:center;padding:25px 0 24px}
+.eyebrow{margin:0 0 12px;color:#f3bd73;letter-spacing:.23em;text-transform:uppercase;font-size:.76rem;font-weight:800}
+h1{font:400 clamp(3.1rem,8vw,6.5rem)/1 Georgia,serif;letter-spacing:-.045em;margin:0;color:#ffd39b;text-shadow:0 8px 30px #f7914760}
+.intro{max-width:560px;margin:19px auto 0;color:#e6d7e9;line-height:1.55}
+.rule{height:2px;width:min(280px,70%);margin:28px auto 0;background:linear-gradient(90deg,transparent,#f8b25b,#b982d6,transparent)}
+.deck{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(12px,2vw,22px);margin:18px 0 28px}
+.head{--tone:#efaa58;position:relative;display:flex;align-items:center;justify-content:center;aspect-ratio:1;min-height:108px;border:1px solid color-mix(in srgb,var(--tone) 58%,transparent);border-radius:22px;background:linear-gradient(155deg,#ffffff12,#ffffff04);box-shadow:inset 0 1px #ffffff24,0 10px 24px #0002;cursor:pointer;transition:transform .2s ease,background .2s ease,box-shadow .2s ease}
+.head:nth-child(3n+2){--tone:#d2a8f0}.head:nth-child(4n){--tone:#f27f73}.head:nth-child(5n){--tone:#9bcde6}
+.head:hover{transform:translateY(-5px) scale(1.03);background:linear-gradient(155deg,#ffffff21,#ffffff0a);box-shadow:inset 0 1px #ffffff30,0 15px 28px #0004}
+.head:active{transform:scale(.96)}
+.head:after{content:"✦";position:absolute;right:12px;top:8px;color:var(--tone);font-size:1rem;opacity:.75}
+.mickey{position:relative;display:block;width:70px;height:65px;filter:drop-shadow(0 0 14px color-mix(in srgb,var(--tone) 38%,transparent))}
+.mickey:before,.mickey:after,.mickey span{content:"";position:absolute;display:block;border-radius:50%;background:var(--tone)}
+.mickey:before,.mickey:after{width:29px;height:29px;top:0}.mickey:before{left:0}.mickey:after{right:0}.mickey span{width:49px;height:49px;bottom:0;left:10.5px}
+.head:hover .mickey{filter:drop-shadow(0 0 22px var(--tone))}
+.hint{text-align:center;color:#c9bbd9;font-size:.83rem;margin:0 0 30px}
+.question-card{max-width:620px;margin:0 auto;padding:clamp(20px,4vw,32px);border:1px solid #f1b86a78;border-radius:20px;background:linear-gradient(145deg,#382548,#172b47);box-shadow:0 20px 55px #0005}
+.question-card[hidden]{display:none}
+.question-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.question-kicker{margin:0;color:#f2ba71;text-transform:uppercase;letter-spacing:.18em;font-size:.72rem;font-weight:800}
+.close{border:0;border-radius:50%;background:#ffffff17;color:#fff;width:34px;height:34px;font-size:1.3rem;cursor:pointer}
+h2{font:400 clamp(1.6rem,4vw,2.25rem)/1.2 Georgia,serif;margin:14px 0 22px}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choice{min-height:50px;text-align:left;padding:10px 15px;border:1px solid #d3b6da7d;border-radius:11px;background:#ffffff0e;color:#fff;font:inherit;cursor:pointer;transition:background .2s ease}
+.choice:hover:not(:disabled){background:#ffffff26}.choice:disabled{cursor:default;opacity:.78}.choice.correct{border-color:#9fe3ac;background:#34754b77;opacity:1}.choice.wrong{border-color:#ffab8c;background:#a73e3e66;opacity:1}
+.feedback{min-height:1.6em;margin:17px 0 0;font-weight:650;color:#ffd394}
+#fireworks{position:fixed;inset:0;width:100%;height:100%;z-index:20;pointer-events:none}
+.flash{position:fixed;z-index:21;pointer-events:none;color:#ffe4ab;font:3.5rem Georgia,serif;text-shadow:0 0 25px #ffac5c;transform:translate(-50%,-50%);animation:flash .8s ease-out forwards}
+@keyframes flash{to{opacity:0;transform:translate(-50%,-50%) scale(2)}}
+@media(max-width:760px){.deck{grid-template-columns:repeat(4,minmax(0,1fr))}.head{min-height:94px}.mickey{transform:scale(.85)}}
+@media(max-width:520px){.wrap{padding-bottom:40px}.deck{grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}.head{min-height:88px;border-radius:17px}.mickey{transform:scale(.76)}.choices{grid-template-columns:1fr}header{padding-top:18px}}
+@media(prefers-reduced-motion:reduce){.head,.choice{transition:none}.head:hover,.head:active{transform:none}.flash{animation:none;opacity:1}}
+</style>
+</head>
+<body>
+<canvas id="fireworks" aria-hidden="true"></canvas>
+<div class="wrap">
+<a class="back" href="./">← Back to the countdown</a>
+<header>
+<p class="eyebrow">A little extra magic</p>
+<h1>Mickey's Magic Deck</h1>
+<p class="intro">Pick a Mickey head and see what happens. There are surprises hiding all over the deck!</p>
+<div class="rule" aria-hidden="true"></div>
+</header>
+<main>
+<div class="deck" aria-label="Mickey surprises">
+<button class="head" type="button" data-kind="fireworks" aria-label="Mickey surprise 1"><span class="mickey" aria-hidden="true"><span></span></span></button>
+<button class="head" type="button" data-kind="trivia" data-question="0" aria-label="Mickey surprise 2"><span class="mickey" aria-hidden="true"><span></span></span></button>
+<button class="head" type="button" data-kind="fireworks" aria-label="Mickey surprise 3"><span class="mickey" aria-hidden="true"><span></span></span></button>
+<button class="head" type="button" data-kind="trivia" data-question="1" aria-label="Mickey surprise 4"><span class="mickey" aria-hidden="true"><span></span></span></button>
+<button class="head" type="button" data-kind="trivia" data-question="2" aria-label="Mickey surprise 5"><span class="mickey" aria-hidden="true"><span></span></span></button>
+<button class="head" type="button" data-kind="fireworks" aria-label="Mickey surprise 6"><span class="mickey" aria-hidden="true"><span></span></span></button>
+<button class="head" type="button" data-kind="trivia" data-question="3" aria-label="Mickey surprise 7"><span class="mickey" aria-hidden="true"><span></span></span></button>
+<button class="head" type="button" data-kind="fireworks" aria-label="Mickey surprise 8"><span class="mickey" aria-hidden="true"><span></span></span></button>
+<button class="head" type="button" data-kind="trivia" data-question="4" aria-label="Mickey surprise 9"><span class="mickey" aria-hidden="true"><span></span></span></button>
+<button class="head" type="button" data-kind="fireworks" aria-label="Mickey surprise 10"><span class="mickey" aria-hidden="true"><span></span></span></button>
+<button class="head" type="button" data-kind="trivia" data-question="5" aria-label="Mickey surprise 11"><span class="mickey" aria-hidden="true"><span></span></span></button>
+<button class="head" type="button" data-kind="fireworks" aria-label="Mickey surprise 12"><span class="mickey" aria-hidden="true"><span></span></span></button>
+</div>
+<p class="hint">Every Mickey can be clicked again. Fireworks are silent.</p>
+<section class="question-card" id="question-card" aria-labelledby="question-title" hidden>
+<div class="question-top"><p class="question-kicker">Cruise trivia</p><button class="close" id="close-question" type="button" aria-label="Close question">×</button></div>
+<h2 id="question-title" tabindex="-1"></h2>
+<div class="choices" id="choices"></div>
+<p class="feedback" id="feedback" role="status"></p>
+</section>
+</main>
+</div>
+<script>
+const questions = [
+  {question:"What day does the Jones family set sail?",choices:["October 8","October 31","December 25","September 8"],answer:0},
+  {question:"Which ship is taking us on our adventure?",choices:["Disney Wish","Disney Fantasy","Disney Dream","Disney Magic"],answer:2},
+  {question:"What is the name of our Halloween cruise celebration?",choices:["Spooky Sailaway","Halloween on the High Seas","Pumpkin Port Party","Haunted Harbor"],answer:1},
+  {question:"What shape opens this secret deck?",choices:["A pumpkin","A star","A Mickey head","An anchor"],answer:2},
+  {question:"Which Mickey treat can rain down on the countdown page?",choices:["Ice cream bars","Popcorn buckets","Candy apples","Pretzels"],answer:0},
+  {question:"How many ears does a Mickey head have?",choices:["One","Two","Three","Four"],answer:1}
+];
+const card = document.getElementById('question-card');
+const title = document.getElementById('question-title');
+const choices = document.getElementById('choices');
+const feedback = document.getElementById('feedback');
+let lastHead = null;
+function showQuestion(index, head) {
+  const item = questions[index];
+  lastHead = head;
+  title.textContent = item.question;
+  choices.replaceChildren();
+  feedback.textContent = '';
+  item.choices.forEach((option, choiceIndex) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'choice';
+    button.textContent = option;
+    button.addEventListener('click', () => {
+      choices.querySelectorAll('button').forEach(choice => { choice.disabled = true; });
+      button.classList.add(choiceIndex === item.answer ? 'correct' : 'wrong');
+      if (choiceIndex !== item.answer) choices.children[item.answer].classList.add('correct');
+      feedback.textContent = choiceIndex === item.answer ? 'You got it! ✨' : 'Good try! The glowing answer is the right one. ✨';
+    });
+    choices.appendChild(button);
+  });
+  card.hidden = false;
+  card.scrollIntoView({behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',block:'nearest'});
+  title.focus({preventScroll:true});
+}
+function closeQuestion() {
+  card.hidden = true;
+  if (lastHead) lastHead.focus();
+}
+document.getElementById('close-question').addEventListener('click', closeQuestion);
+document.addEventListener('keydown', event => { if (event.key === 'Escape' && !card.hidden) closeQuestion(); });
+
+const canvas = document.getElementById('fireworks');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let frame = 0;
+function sizeCanvas() {
+  const scale = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = window.innerWidth * scale;
+  canvas.height = window.innerHeight * scale;
+  ctx.setTransform(scale,0,0,scale,0,0);
+}
+sizeCanvas();
+window.addEventListener('resize', sizeCanvas);
+function burst(x,y) {
+  const colors = ['#ffd48b','#f28a56','#d4a5f8','#fff3ce','#ff7394','#8dd6f1'];
+  for (let i=0;i<70;i++) {
+    const angle = Math.PI * 2 * i / 70;
+    const speed = 1.7 + Math.random() * 4;
+    particles.push({x,y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,life:55+Math.random()*20,max:75,color:colors[i%colors.length],size:2+Math.random()*2.5});
+  }
+  if (!frame) frame = requestAnimationFrame(draw);
+}
+function draw() {
+  ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+  particles = particles.filter(p => p.life > 0);
+  for (const p of particles) {
+    p.x += p.vx;p.y += p.vy;p.vy += .05;p.vx *= .992;p.life--;
+    ctx.globalAlpha = Math.min(1,p.life/20);
+    ctx.fillStyle = p.color;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+  frame = particles.length ? requestAnimationFrame(draw) : 0;
+}
+function showFireworks(head) {
+  const rect = head.getBoundingClientRect();
+  const x = rect.left + rect.width/2;
+  const y = rect.top + rect.height/2;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const flash = document.createElement('span');
+    flash.className = 'flash';
+    flash.textContent = '✦';
+    flash.style.left = x + 'px';
+    flash.style.top = y + 'px';
+    document.body.appendChild(flash);
+    setTimeout(() => flash.remove(), 800);
+    return;
+  }
+  burst(x,y);
+  setTimeout(() => burst(Math.max(45,Math.min(innerWidth-45,x-80)),Math.max(50,y-75)),180);
+  setTimeout(() => burst(Math.max(45,Math.min(innerWidth-45,x+80)),Math.max(50,y-105)),360);
+}
+document.querySelectorAll('.head').forEach(head => head.addEventListener('click', () => {
+  if (head.dataset.kind === 'trivia') showQuestion(Number(head.dataset.question),head);
+  else showFireworks(head);
+}));
+</script>
+</body>
+</html>
